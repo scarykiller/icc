@@ -27,8 +27,12 @@ Route::get('email', 'EmailController@getForm');
 Route::post('email', ['uses' => 'EmailController@postForm', 'as' => 'storeEmail']);
 
 Route::resource('post', 'PostController', ['except' => ['show', 'edit', 'update']]);
+Route::get('post/tag/{tag}', 'PostController@indexTag');
+
 
 Auth::routes();
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout'); //TODO Regler Problème logout
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 

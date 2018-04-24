@@ -21,10 +21,12 @@ class LoginController extends Controller
     public function logout(Request $request){
 
         $this->guard()->logout();
-        $request->session()->flush();
-        $request->session()->regenerate();
+        $request->session()->invalidate();
+        return back()->withInput();
 
-        return redirect('/post');
+
+
+        //TODO Verifier redirection logout
     }
 
     use AuthenticatesUsers;
@@ -34,8 +36,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/post';
-
+    protected $redirectTo = '/home';
+//TODO Regler la redirection
     /**
      * Create a new controller instance.
      *

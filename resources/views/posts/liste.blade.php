@@ -4,19 +4,10 @@
     @if(Auth::check())
         <div class="btn-group pull-right">
             {!! link_to_route('post.create', 'Créer un article', [], ['class' => 'btn btn-info']) !!}
-<a class="btn btn-warning" href="{{ route('logout') }}"
-   onclick="event.preventDefault();
-   document.getElementById('logout-form').submit();">Deconnexion</a>
-
-   <form id="logout-form" action="{{route('logout')}}" method="POST" style ="display:none;">
-       {{ csrf_field() }}
-
-   </form>
+            {!! link_to('logout', 'Deconnexion', ['class' => 'btn btn-warning']) !!}
         </div>
     @else
         {!! link_to('login', 'Se connecter', ['class' => 'btn btn-info pull-right']) !!}
-
-
     @endif
 @endsection
 
@@ -29,7 +20,13 @@
         <article class="row bg-primary">
             <div class="col-md-12">
                 <header>
-                    <h1>{{ $post->titre }}</h1>
+                    <h1>{{ $post->titre }}
+                        <div class="pull-right">
+                            @foreach($post->tags as $tag)
+                                {!! link_to('post/tag/' . $tag->tag_url, $tag->tag,	['class' => 'btn btn-xs btn-info']) !!}
+                            @endforeach
+                        </div>
+                    </h1>
                 </header>
                 <hr>
                 <section>
