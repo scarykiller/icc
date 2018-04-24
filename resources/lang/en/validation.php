@@ -98,12 +98,12 @@ return [
     | specify a specific custom language line for a given attribute rule.
     |
     */
-
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'tags' => [
+            'regex' => "tags, separated by commas (no spaces), should have a maximum of 50 characters.",
         ],
-    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
