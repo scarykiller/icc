@@ -16,6 +16,8 @@
         <div class="row alert alert-info">{{ $info }}</div>
     @endif
     {!! $links !!}
+
+
     @foreach($posts as $post)
         <article class="row bg-primary">
             <div class="col-md-12">

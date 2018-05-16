@@ -5,5 +5,5 @@
 @endsection
 
 @section('contenu')
-    <p>C'est l'article n° {{ $numero }}</p>
+    <p>C'est l'achat n° {{ $numero }}</p>
 @endsection

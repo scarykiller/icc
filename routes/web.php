@@ -30,9 +30,14 @@ Route::resource('post', 'PostController', ['except' => ['show', 'edit', 'update'
 Route::get('post/tag/{tag}', 'PostController@indexTag');
 
 
+Route::resource('produit', 'ProduitController', ['except' => ['show', 'edit', 'update']]);
+
+
+
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout'); //TODO Regler Problème logout
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('achat', 'AchatController@index');
 
