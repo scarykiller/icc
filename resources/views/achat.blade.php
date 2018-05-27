@@ -21,8 +21,9 @@ Les articles
 
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <a class="btn btn-link" href="{{ route('categorie',"info") }}">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                 <strong>Album</strong>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,21 +38,26 @@ Les articles
     {!! $links !!}
 
 
-
-    <div class="album py-5 bg-light">
         <div class="container">
+            <?php  $i=0 ?>
 
-        @foreach($produits as $produit)
+            <div class="col-md-8">
 
+                <div class="row">
+                    @foreach($produits as $produit)
+                        @if ($i==4  )
+                        <div class="row">
+                            <br>
+                            <br>
+                            @endif
+                        <div class="col-md-3">
+                    <div class="row">
 
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src={{$produit->img}} alt="Card image cap" height=100 width=100>
+                    <div class="card mb-2 box-shadow">
+                       <!-- <img class="card-img-top img-responsive img-fluid" src={{$produit->img}} alt="Card_image_cap" height=100 width=100> -->
                         <div class="card-body">
                             <p class="card-text">{{$produit->description}}</p>
-                            <p class="card-price">{{$produit->price,k}}</p>
+                            <p class="card-price">{{$produit->price}}</p>
 
 
                             <div class="d-flex justify-content-between align-items-center">
@@ -62,9 +68,39 @@ Les articles
                                 <small class="text-muted">9 mins</small>
                             </div>
                         </div>
+                        </div>
+
                     </div>
+                @if($i==3) <!-- Pour mettre sur une deuxieme ligne -->
+                    </div>
+                    @endif
+
                 </div>
-    @endforeach
+
+                    <?php $i=$i+1 ?>
+
+
+                    @endforeach
+
+                </div>
+
+
+
+
+        </div>
+        <div class="col-md-4">
+            <li>
+                <ul>prout</ul>
+                <ul>prout</ul>
+            </li>
+
+        </div>
+
+
+        </div>
+
+
+
 </main>
 
 <footer class="text-muted">
@@ -77,7 +113,7 @@ Les articles
         <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
         <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
     </div>
-    </div>
+</div>
 </footer>
 
 <!-- Bootstrap core JavaScript
