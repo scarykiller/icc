@@ -2,7 +2,15 @@
 @section('titre')
 Les articles
 @endsection
+<style>
+    #display-on-click
+    {
+        display: none;
+
+    }
+</style>
 @section('header')
+    <div class="row">
     @if(Auth::check())
         <div class="btn-group pull-right">
 
@@ -11,37 +19,94 @@ Les articles
     @else
         {!! link_to('login', 'Se connecter', ['class' => 'btn btn-info pull-right']) !!}
     @endif
+    </div>
+
+<div class="btn-group pull-left">
+
+
+
+</div>
+
+
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a class="btn btn-link btn-toolbar" href="{{ route('categorie',"info") }} ">
+                Informatique
+            </a>
+            <a class="btn btn-link btn-toolbar" href="{{ route('categorie',"hifi") }} ">
+                Hifi
+            </a>
+
+
+                <a class="btn btn-link btn-toolbar" href="{{ route('categorie',"autre") }} ">
+                3me Catégorie
+                </a>
+        </div>
+        </div>
+
 @endsection
 
 @section('contenu')
 
+
 <body>
-
-<header>
-
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <a class="btn btn-link" href="{{ route('categorie',"info") }}">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                <strong>Album</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</header>
-
-
 <main role="main">
     {!! $links !!}
 
 
         <div class="container">
-            <?php  $i=0 ?>
+            <div class="col-md-4 pull-right">
+                <strong>Panier</strong>
+            <ul id="test" class="list-group">
 
-            <div class="col-md-8">
+
+                <li id="add-display" class="list-group-item btn" onclick="myFunction()" >Voir les détails du panier</li>
+                @if (\Session::exists("cart"))
+                    <div id="display-on-click">
+                    <?php $prixTot=0; ?>
+                        @foreach (\Session::get("cart") as $prod)
+                            @if (!($prod[0]->name == ""))
+
+                            <?php $prixTot = $prixTot + $prod[0]->price ?>
+                            @endif
+
+
+                            @endforeach
+
+
+
+                        <li class =list-group-item>Prix total : &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{$prixTot}}  </li>
+
+                    @foreach (\Session::get("cart") as $prod)
+                        <?php $count=0 ?>
+                            @foreach (\Session::get("cart") as $testProd)
+                            @if($prod[0]->id == $testProd[0]->id && !($prod[0]->name=="") && !($testProd[0]->name==""))
+                                <?php $count++ ?>
+                            @endif
+
+
+
+                            @endforeach
+                        @if (!($prod[0]->name == ""))
+
+                            <?php $prixTot = $prixTot + $prod[0]->price ?>
+                            <li>{{($prod[0]->name)}} :
+                                {{(($prod[0]->price))}}</li>
+                            {{"quantité :" .$count}}
+
+                    <br>
+                    @endif
+                    @endforeach
+                    </div>
+            </ul>
+                @endif
+
+            </div>
+
+
+        <?php  $i=0 ?>
+
+            <div class="col-md-8 top-right">
 
                 <div class="row">
                     @foreach($produits as $produit)
@@ -62,8 +127,16 @@ Les articles
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    {!! Form::open(['method' => 'GET', 'route' => ['updatePanier', $produit->id]]) !!}
+                                    {!! Form::submit("Ajouter l'article au panier", ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Vraiment supprimer cet article ?\')']) !!}
+                                    {!! Form::close() !!}
+                                    {!! Form::open(['method' => 'GET', 'route' => ['destroyPanier',$produit->id]]) !!}
+                                    {!! Form::submit('Supprimer cet article', ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Vraiment supprimer cet article ?\')']) !!}
+                                    {!! Form::close() !!}
+
+
+
+
                                 </div>
                                 <small class="text-muted">9 mins</small>
                             </div>
@@ -88,13 +161,6 @@ Les articles
 
 
         </div>
-        <div class="col-md-4">
-            <li>
-                <ul>prout</ul>
-                <ul>prout</ul>
-            </li>
-
-        </div>
 
 
         </div>
@@ -102,7 +168,7 @@ Les articles
 
 
 </main>
-
+</body>
 <footer class="text-muted">
     <div class="col-md-offset-0>
     <div class="container">
@@ -128,3 +194,10 @@ Les articles
 </html>
 
 @endsection
+    <script>
+        function myFunction() {
+
+            document.getElementById('display-on-click').style.display = 'block';
+        }
+
+</script>

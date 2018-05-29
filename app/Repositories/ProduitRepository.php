@@ -13,16 +13,14 @@ class ProduitRepository {
         $this->produit = $produit;
     }
 
-    public function getProduits()
+    public function getProduits($categorie,$n)
     {
-        return Produit::all();
+      //  return Produit::all()->where("catégorie","info");
+        return \DB::table('produits')->where("catégorie",$categorie)->paginate($n);
     }
-
-    public function getPaginate($n)
-    {
-        return $this->produit->paginate($n);
-
-    //        return $this->getProduits()->paginate($n);
+    public function getProduit($id){
+        $retour =\DB::table('produits')->where("id",$id)->get()->toArray();
+        return ($retour);
     }
 
     public function getWithUserAndTagsForTagPaginate($tag, $n)

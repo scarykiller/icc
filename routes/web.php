@@ -31,6 +31,11 @@ Route::get('post/tag/{tag}', 'PostController@indexTag');
 
 
 Route::resource('produit', 'ProduitController', ['except' => ['show', 'edit', 'update']]);
+Route::get("produit/{n}","ProduitController@cat")->name("categorie");
+
+Route::get('produit/addpanier/{num}',"ProduitController@updatePanier")->name('updatePanier');
+
+Route::get('produit/destroyPanier/{num}',"ProduitController@destroyPanier")->name('destroyPanier');
 
 
 

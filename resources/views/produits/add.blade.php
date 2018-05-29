@@ -19,6 +19,11 @@
                     {!! Form::text('price', null, array('class' => 'form-control', 'placeholder' => 'Entrez le prix')) !!}
                     {!! $errors->first('price', '<small class="help-block">:message</small>') !!}
                 </div>
+                <div class="form-group {{ $errors->has('catégorie') ? 'has-error' : '' }}">
+                    {!! Form::text('catégorie', null, array('class' => 'form-control', 'placeholder' => 'Entrez une catégorie')) !!}
+                    {!! $errors->first('catégorie', '<small class="help-block">:message</small>') !!}
+                </div>
+
                 <div class="form-group {{ $errors->has('img') ? 'has-error' : '' }}">
                     {!! Form::text('img', null, array('img' => 'form-control', 'placeholder' => "Entrez l'Url d'une image")) !!}
                     {!! $errors->first('img', '<small class="help-block">:message</small>') !!}
