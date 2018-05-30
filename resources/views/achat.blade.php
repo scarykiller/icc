@@ -5,7 +5,7 @@ Les articles
 <style>
     #display-on-click
     {
-        display: none;
+        display: block;
 
     }
 </style>
@@ -91,8 +91,10 @@ Les articles
 
                             <?php $prixTot = $prixTot + $prod[0]->price ?>
                             <li>{{($prod[0]->name)}} :
+@if (isset($prod["quantite"]))
+    {{"LOL :" .$prod["quantite"]}}
+    @endif
                                 {{(($prod[0]->price))}}</li>
-                            {{"quantité :" .$count}}
 
                     <br>
                     @endif

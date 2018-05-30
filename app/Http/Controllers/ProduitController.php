@@ -41,14 +41,33 @@ class ProduitController extends Controller
 
     }
     public function updatePanier($n){
-        if(\Session::exists("cart")):{
-            $n=$this->produitRepository->getProduit($n);
-            \Session::push("cart",$n);
+        if(\Session::exists("cart")):
 
-        }
+            $produit=$this->produitRepository->getProduit($n);
+
+            if (isset($produit["quantite"]) && $produit[0]->id == $n):
+                $produit["quantite"]++;
+            else :
+                if($produit[0]->id == $n):
+                $produit["quantite"]=1;
+            endif;
+
+
+            \Session::push("cart",$produit);
+            endif;
+
+
         else: {
-            $n=$this->produitRepository->getProduit($n);
-            $produit = [$n];
+            $z=$this->produitRepository->getProduit($n);
+            $produit=$z;
+            if (isset($produit["quantite"])&& $produit->id == $n ):
+                $produit["quantite"]++;
+            else :
+                $produit["quantite"]=1;
+
+            endif;
+
+
             \Session::put("cart", $produit);
 
         }
@@ -114,6 +133,14 @@ class ProduitController extends Controller
 
                 elseif (($product[0]->id == $id) && !($product[0]->name=="")):
                     $product[0]->name = "";
+                    if (isset($product[0]->quantité) && $product[0]->id ==$id ):
+                        $product[0]->quantité--;
+                    else :
+                        if($product[0]->id ==$id):
+
+                        $product[0]->quantité=0;
+                        endif;
+                    endif;
                     $sortie=1;
 
                     endif;
