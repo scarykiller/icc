@@ -41,37 +41,27 @@ class ProduitController extends Controller
 
     }
     public function updatePanier($n){
-        if(\Session::exists("cart")):
-
-            $produit=$this->produitRepository->getProduit($n);
-
-            if (isset($produit["quantite"]) && $produit[0]->id == $n):
-                $produit["quantite"]++;
-            else :
-                if($produit[0]->id == $n):
-                $produit["quantite"]=1;
-            endif;
-
-
-            \Session::push("cart",$produit);
-            endif;
-
-
-        else: {
-            $z=$this->produitRepository->getProduit($n);
-            $produit=$z;
-            if (isset($produit["quantite"])&& $produit->id == $n ):
-                $produit["quantite"]++;
-            else :
-                $produit["quantite"]=1;
-
-            endif;
+        if (session()->has("id".$n)):
+            echo("IL EXISTE");
+            $qModif = session("id".$n);
+            $qModif++;
+            session(["id".$n => $qModif]);
+            var_dump($n);
+        else:
+            echo("Il a été créé");
+            session((["id".$n => '1']));
+            $z =$this->produitRepository->getProduit($n);
+            \Session::push("cart",$z);
+            var_dump($n);
+            var_dump(session()->has($n));
+            echo("prout");
+            var_dump(session($n));
 
 
-            \Session::put("cart", $produit);
 
-        }
         endif;
+
+
 
         if (\Session::exists("categorie")):
             $categorie = \Session::get("categorie");
@@ -124,7 +114,14 @@ class ProduitController extends Controller
 
     }
     public function destroyPanier($id){
-        //TODO : A tester
+        if (session()->has("id".$id)):
+            $qModif = \Session::get("id".$id);
+            $qModif--;
+            session(["id".$id,$qModif]);
+        endif;
+
+            //TODO : A tester
+
         $sortie=0;
         if(\Session::exists("cart") ) :
             foreach (\Session::get("cart") as $product):
@@ -133,19 +130,11 @@ class ProduitController extends Controller
 
                 elseif (($product[0]->id == $id) && !($product[0]->name=="")):
                     $product[0]->name = "";
-                    if (isset($product[0]->quantité) && $product[0]->id ==$id ):
-                        $product[0]->quantité--;
-                    else :
-                        if($product[0]->id ==$id):
-
-                        $product[0]->quantité=0;
-                        endif;
-                    endif;
                     $sortie=1;
 
                     endif;
             endforeach;
-
+            endif;
             $categorie ="";
             if (\Session::exists("categorie")):
                 $categorie = \Session::get("categorie");
@@ -158,7 +147,7 @@ class ProduitController extends Controller
             $produits = $this->produitRepository->getProduits($categorie,6);
             $links = $produits->render();
 
-            //$_SESSION["categorie"] ="hifi";
+        //$_SESSION["categorie"] ="hifi";
             //Session::put("categorie","hifi");
 
             return view('achat', compact('produits', 'links'));
@@ -167,7 +156,6 @@ class ProduitController extends Controller
 
 
 
-            endif;
     }
     //
 }

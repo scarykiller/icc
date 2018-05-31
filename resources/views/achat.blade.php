@@ -5,7 +5,7 @@ Les articles
 <style>
     #display-on-click
     {
-        display: block;
+        display: none;
 
     }
 </style>
@@ -67,7 +67,7 @@ Les articles
                         @foreach (\Session::get("cart") as $prod)
                             @if (!($prod[0]->name == ""))
 
-                            <?php $prixTot = $prixTot + $prod[0]->price ?>
+                            <?php $prixTot = $prixTot + ($prod[0]->price *session("id".$prod[0]->id)) ?>
                             @endif
 
 
@@ -87,14 +87,13 @@ Les articles
 
 
                             @endforeach
+
                         @if (!($prod[0]->name == ""))
 
                             <?php $prixTot = $prixTot + $prod[0]->price ?>
                             <li>{{($prod[0]->name)}} :
-@if (isset($prod["quantite"]))
-    {{"LOL :" .$prod["quantite"]}}
-    @endif
                                 {{(($prod[0]->price))}}</li>
+                                Quantité ={{session("id".$prod[0]->id)}}
 
                     <br>
                     @endif
