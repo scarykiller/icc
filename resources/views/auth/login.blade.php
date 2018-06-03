@@ -65,5 +65,30 @@
             </div>
         </div>
     </div>
-</div>
+        <div class ="col-lg-4 list-group">
+        <h3>En tant que membre :</h3>
+        <li>
+                <ul class="list-group-item">Voir et commenter les articles :</ul>
+                <ul class="list-group-item">Acheter des produits dans la boutique en ligne</ul>
+                <ul class="list-group-item">Participer au mini-chat</ul>
+                <ul class="list-group-item">Mettre une photo de profil</ul>
+            </li>
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+
+        <div class="col-lg-4 list-group">
+            <h3>En tant que simple visiteur :</h3>
+            <li>
+                <ul class="list-group-item">Voir les articles</ul>
+                <ul class="list-group-item">Vous inscrire</ul>
+                <ul class="list-group-item">Participer au mini-chat</ul>
+                <ul class="list-group-item">Mettre une photo de profil</ul>
+            </li>
+
+
+        </div>
+
+    </div>
 @endsection

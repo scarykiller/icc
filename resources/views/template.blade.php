@@ -17,7 +17,38 @@
 <body>
 <header class="jumbotron">
     <div class="container">
-        <h1 class="page-header">{!! link_to_route('post.index', 'Le site Communautaire') !!}</h1>
+        <h1 class="page-header">{!! link_to_route('home', 'Le site Communautaire') !!}</h1>
+        <div class="navbar-left">
+        <div class="nav navbar-default ">
+            {!! link_to_route('produit.index', 'Page des Produits') !!}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {!! link_to_route('post.index','Les articles du blog') !!}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {!! link_to_route('commentaire.index','La buvette !') !!}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {!! link_to_route('confirmAchat','Liste des Achats !') !!}
+
+        </div>
+
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                <?php $user =\Auth::user()->attributesToArray(); ?>
+                <?php $user = $user['avatar']; ?>
+
+                <img src="{{ asset('img/'.$user) }}" style="width:32px; height:32px; position:absolute; top:10px; left:10px; border-radius:50%">
+            </a>
+
+        </div>
+        <div class="navbar-right ">
+            <div class="nav btn btn-info">
+                {!! link_to_route('profile.show','Profil Utilisateur') !!}
+
+
+
+            </div>
+
+
+        </div>
         @yield('header')
     </div>
 </header>

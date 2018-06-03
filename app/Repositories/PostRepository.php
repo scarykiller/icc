@@ -10,7 +10,10 @@ class PostRepository {
     {
         $this->post = $post;
     }
+    public function getWithId($id){
+        return \DB::table('posts')->where("id", $id)->first();
 
+    }
     private function queryWithUserAndTags()
     {
         return $this->post->with('user', 'tags')
@@ -39,7 +42,6 @@ class PostRepository {
     public function destroy($id)
     {
         $post = $this->post->findOrFail($id);
-        $post->tags()->detach();
         $post->delete();
     }
 

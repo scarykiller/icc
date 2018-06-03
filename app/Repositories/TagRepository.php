@@ -14,35 +14,20 @@ class TagRepository
         $this->tag = $tag;
     }
 
-    public function store($post, $tags)
+    public function store($inputs)
     {
-        $tags = explode(',', $tags);
+        return $this->tag->create($inputs);
 
-        foreach ($tags as $tag) {
-
-            $tag = trim($tag);
-
-            $tag_url = Str::slug($tag);
-
-            $tag_ref = $this->tag->where('tag_url', $tag_url)->first();
-
-            if(is_null($tag_ref))
-            {
-                $tag_ref = new $this->tag([
-                    'tag' => $tag,
-                    'tag_url' => $tag_url
-                ]);
-
-                $post->tags()->save($tag_ref);
-
-            } else {
-
-                $post->tags()->attach($tag_ref->id);
-
-            }
-
-        }
 
     }
 
+    public function getTagsById($id)
+    {
+        //  return Produit::all()->where("catégorie","info");
+
+       // return \DB::table('tags')->where("post_id", '$id')->paginate(15);
+        return $this->tag->with('user')->where("post_id",$id)->paginate("10");
+
+
+    }
 }

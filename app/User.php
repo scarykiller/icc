@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','admin'
+        'name', 'email', 'password','admin','adress','avatar'
     ];
 
     /**
@@ -29,14 +29,22 @@ class User extends Authenticatable
     }
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = bcrypt($password);
+        return  $this->attributes['password'] = bcrypt($password);
     }
     public function achats(){
 
-        $this->hasMany('App\achat');
+        return $this->hasMany('App\achat');
     }
     public function commentaires(){
-        $this->hasMany('App\Commentaire');
+        return $this->hasMany('App\Commentaire');
     }
-
+    public function tags(){
+       return $this->hasMany('App\tags');
+    }
+public function produitUser(){
+       return $this->hasMany('App\produitUser');
+}
+public function adress(){
+      return  $this->BelongsTo('App\Adress','adress_id','id');
+}
 }

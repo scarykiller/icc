@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
 
-    protected $fillable = ['tag','tag_url'];
+    protected $fillable = ['tag','post_id','user_id'];
 
     public function posts()
     {
-        return $this->belongsToMany('App\Post');
+        return $this->belongsTo('App\Post','post_id','id');
+    }
+    public function user(){
+
+        return $this->belongsTo('App\User','user_id','id');
     }
 
 }

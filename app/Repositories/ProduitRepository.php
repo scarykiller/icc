@@ -22,6 +22,10 @@ class ProduitRepository {
         $retour =\DB::table('produits')->where("id",$id)->get()->toArray();
         return ($retour);
     }
+    public function getIds(){
+        $retour = \DB::table('produit')->select("id")->get()->toArray();
+        return $retour;
+    }
 
     public function getWithUserAndTagsForTagPaginate($tag, $n)
     {

@@ -12,4 +12,12 @@ class UserRepository extends ResourceRepository
         $this->model = $user;
     }
 
+    public function updateMail($email){
+        $this->model->where('email', 'San Diego')
+            ->update(['email' => $email]); // this will also update the record
+
+
+    }
+
+
 }

@@ -16,6 +16,10 @@ class produit extends Model
 
         return $this->belongsToMany('App\User');
     }
+    public function produitUser(){
+
+        return $this->hasMany('App\ProduitUser');
+    }
 
     //
 }

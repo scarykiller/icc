@@ -68,10 +68,7 @@ class ProduitController extends Controller
         else:
             $categorie = "info";
         endif;
-
-        $produits = $this->produitRepository->getProduits($categorie,6);
-        $links = $produits->render();
-        return view('achat', compact('produits', 'links'));
+        return redirect(route('produit.index'));
 
 
     }
@@ -141,16 +138,7 @@ class ProduitController extends Controller
             else:
                 $categorie = "info";
             endif;
-
-
-
-            $produits = $this->produitRepository->getProduits($categorie,6);
-            $links = $produits->render();
-
-        //$_SESSION["categorie"] ="hifi";
-            //Session::put("categorie","hifi");
-
-            return view('achat', compact('produits', 'links'));
+            return redirect(route('produit.index'));
 
 
 

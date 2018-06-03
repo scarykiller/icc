@@ -34,6 +34,8 @@ class UserController extends Controller
         return view('create');
     }
 
+
+
     public function store(Request $request)
     {
         $this->setAdmin($request);
@@ -55,6 +57,12 @@ class UserController extends Controller
         $user = $this->userRepository->getById($id);
 
         return view('edit',  compact('user'));
+    }
+
+
+    public function upmail($email){
+        $this->userRepository->updateMail($email);
+        return redirect()->route('profile.show');
     }
 
     public function update(Request $request, $id)

@@ -22,12 +22,12 @@
         <article class="row bg-primary">
             <div class="col-md-12">
                 <header>
+                    {!! Form::open(['method' => 'GET', 'route' => ['showTag', $post->id]]) !!}
+                    {!! Form::submit("Voir les commentaires", ['class' => 'btn btn-danger btn-xs '])  !!}
+                    {!! Form::close() !!}
+
+
                     <h1>{{ $post->titre }}
-                        <div class="pull-right">
-                            @foreach($post->tags as $tag)
-                                {!! link_to('post/tag/' . $tag->tag_url, $tag->tag,	['class' => 'btn btn-xs btn-info']) !!}
-                            @endforeach
-                        </div>
                     </h1>
                 </header>
                 <hr>
@@ -38,9 +38,7 @@
                         {!! Form::submit('Supprimer cet article', ['class' => 'btn btn-danger btn-xs ', 'onclick' => 'return confirm(\'Vraiment supprimer cet article ?\')']) !!}
                         {!! Form::close() !!}
                     @endif
-                    <em class="pull-right">
-                        <span class="glyphicon glyphicon-pencil"></span> {{ $post->user->name }} le {!! $post->created_at->format('d-m-Y') !!}
-                    </em>
+
                 </section>
             </div>
         </article>

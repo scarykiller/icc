@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\tagRequest;
 use App\Repositories\PostRepository;
 use App\Repositories\TagRepository;
 use App\Http\Requests\PostRequest;
@@ -10,15 +11,20 @@ class PostController extends Controller
 {
 
     protected $postRepository;
-
+    protected $tagRepository;
     protected $nbrPerPage = 4;
 
-    public function __construct(PostRepository $postRepository)
+    public function __construct(PostRepository $postRepository,TagRepository $tagRepository)
     {
         $this->middleware('auth', ['except' => ['index', 'indexTag']]);
         $this->middleware('admin', ['only' => 'destroy']);
 
         $this->postRepository = $postRepository;
+        $this->tagRepository = $tagRepository;
+    }
+
+    public function show(){
+
     }
 
     public function index()
@@ -36,18 +42,11 @@ class PostController extends Controller
 
     public function store(PostRequest $request, TagRepository $tagRepository)
     {
-        $inputs = array_merge($request->all(), ['user_id' => $request->user()->id]);
-
+        $inputs = array_merge($request->all());
         $post = $this->postRepository->store($inputs);
-
-        if(isset($inputs['tags']))
-        {
-            $tagRepository->store($post, $inputs['tags']);
-        }
 
         return redirect(route('post.index'));
     }
-
     public function destroy($id)
     {
         $this->postRepository->destroy($id);
@@ -55,13 +54,27 @@ class PostController extends Controller
         return redirect()->back();
     }
 
-    public function indexTag($tag)
+    public function indexTag($articleId)
+        //Montre les commentaires (tags) d'un article par l'id de l'article($tag)
     {
-        $posts = $this->postRepository->getWithUserAndTagsForTagPaginate($tag, $this->nbrPerPage);
-        $links = $posts->render();
-
-        return view('posts.liste', compact('posts', 'links'))
-            ->with('info', 'Résultats pour la recherche du mot-clé : ' . $tag);
+        $tags = $this->tagRepository->getTagsById($articleId);
+        $links = $tags->render();
+        $article = $this->postRepository->getWithId($articleId);
+        session(["id_post" => $articleId]);
+        return view('tags', compact('tags', 'links'),compact('article'));
     }
+    public function createTag(tagRequest $tagRequest,TagRepository $tagRepository){
+        $inputs = array_merge($tagRequest->all(),['user_id' => $tagRequest->user()->id]);
+        $inputs = array_merge($inputs,["post_id" => session("id_post")]);
+
+
+
+        $post = $this->tagRepository->store($inputs);
+        return redirect(route('post.index'));
+
+
+
+    }
+
 
 }
